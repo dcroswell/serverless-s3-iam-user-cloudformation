@@ -1,0 +1,43 @@
+# IR Test written with Serverless!
+
+service: s3-user
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-southeast-2
+
+# Instead of functions you can add CloudFormation resources
+resources:
+  Parameters:
+    S3UserNameInput:
+      Description: The user name to be created and granted access mentioned in the template description.
+      Type: String
+      Default: "myS3user"
+    S3UserPasswordInput:
+      Description: The user password used for the first time access. This should be changed upon the first login.
+      Type: String
+      Default: "myP@ssW0rd"
+  Resources:
+    S3User:
+      Type: "AWS::IAM::User"
+      Properties:
+        UserName: !Ref S3UserNameInput
+        LoginProfile:
+          Password: !Ref S3UserPasswordInput
+        Policies:
+        - PolicyName: GiveS3AccessButNoDownload
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - s3:*
+              Resource:
+              - arn:aws:s3:::*
+            - Effect: Deny
+              Action:
+              - s3:GetObject
+              - s3:DeleteObject
+              Resource:
+              - arn:aws:s3:::*
