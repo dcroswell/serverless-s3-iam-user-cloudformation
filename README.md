@@ -7,7 +7,7 @@ The user name can be passed in as a parameter or it will be defaulted to `myS3us
 
 #### Prerequisites ####
 
-1. Must have **Serverless** installed on your machine (verify with the command: Serverless -v). 
+1. Must have **Serverless** installed on your machine (verify with the command: serverless -v). 
 Instructions can be found [here](https://serverless.com/framework/docs/providers/aws/guide/installation/).
 
 2. Must have **AWS** credentials profile in your .aws/credentials file with a user key and user secret that has access to deploy Cloudformation stacks to that account.
